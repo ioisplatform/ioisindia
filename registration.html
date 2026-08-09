@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#030712"
+    >
+
+    <title>IOIS Registration</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- IOIS Config -->
+    <script src="config.js"></script>
+
+    <!-- Central Supabase Client -->
+    <script src="supabase-config.js"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(249,115,22,.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(20,184,166,.10),
+                    transparent 30%
+                ),
+                #030712;
+
+            color: white;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        .glass {
+
+            background:
+                rgba(15,23,42,.84);
+
+            border:
+                1px solid
+                rgba(245,158,11,.20);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,.45);
+        }
+
+
+        .input-box {
+
+            width: 100%;
+
+            background:
+                rgba(2,6,23,.85);
+
+            border:
+                1px solid
+                rgba(100,116,139,.55);
+
+            color: white;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .input-box:focus {
+
+            outline: none;
+
+            border-color:
+                #f59e0b;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(245,158,11,.10);
+        }
+
+
+        .input-box::placeholder {
+
+            color:
+                #64748b;
+        }
+
+
+        .gradient-text {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #f97316,
+                    #ffffff,
+                    #10b981
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            -webkit-text-fill-color:
+                transparent;
+        }
+
+
+        .register-btn {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #fbbf24,
+                    #14b8a6
+                );
+
+            color:
+                #020617;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .register-btn:hover:not(:disabled) {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(20,184,166,.25);
+        }
+
+
+        .register-btn:disabled {
+
+            opacity:
+                .60;
+
+            cursor:
+                not-allowed;
+        }
+
+
+        .spinner {
+
+            width: 18px;
+
+            height: 18px;
+
+            border:
+                2px solid
+                rgba(2,6,23,.25);
+
+            border-top-color:
+                #020617;
+
+            border-radius: 50%;
+
+            animation:
+                spin .7s linear infinite;
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+
+        }
+
+
+        .message {
+
+            padding:
+                12px 14px;
+
+            border-radius:
+                12px;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.5;
+        }
+
+
+        .message.error {
+
+            background:
+                rgba(127,29,29,.25);
+
+            border:
+                1px solid
+                rgba(239,68,68,.30);
+
+            color:
+                #fca5a5;
+        }
+
+
+        .message.success {
+
+            background:
+                rgba(20,83,45,.25);
+
+            border:
+                1px solid
+                rgba(34,197,94,.30);
+
+            color:
+                #86efac;
+        }
+
+
+        .message.info {
+
+            background:
+                rgba(7,47,73,.25);
+
+            border:
+                1px solid
+                rgba(14,165,233,.30);
+
+            color:
+                #7dd3fc;
+        }
+
+
+        .logo {
+
+            width: 82px;
+
+            height: 82px;
+
+            object-fit: contain;
+
+            display: block;
+
+            margin: auto;
+
+            border-radius: 18px;
+
+            border:
+                1px solid
+                rgba(245,158,11,.40);
+
+            box-shadow:
+                0 10px 35px
+                rgba(245,158,11,.12);
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
+
+<header
+    class="
+        border-b
+        border-white/10
+        bg-gray-950/90
+        backdrop-blur-xl
+    "
+>
+
+    <div
+        class="
+            max-w-7xl
+            mx-auto
+            px-4
+            py-3
+            flex
+            items-center
+            justify-between
+        "
+    >
+
+        <a
+            href="index.html"
+            class="
+                flex
+                items-center
+                gap-3
+            "
+        >
+
+            <img
+                src="assets/logo.png"
+                alt="IOIS Logo"
+                class="
+                    w-11
+                    h-11
+                    object-contain
+                    rounded-xl
+                "
+            >
+
+            <div>
+
+                <div
+                    class="
+                        text-lg
+                        font-black
+                        gradient-text
+                    "
+                >
+                    IOIS PLATFORM
+                </div>
+
+                <div
+                    class="
+                        text-[8px]
+                        text-teal-400
+                        font-bold
+                        uppercase
+                        tracking-widest
+                    "
+                >
+                    Indian Online Income Supporting System
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="login.html"
+            class="
+                text-xs
+                text-gray-300
+                hover:text-amber-400
+            "
+        >
+
+            <i class="fa-solid fa-right-to-bracket mr-1"></i>
+
+            Login
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main
+    class="
+        min-h-[calc(100vh-70px)]
+        flex
+        justify-center
+        items-center
+        px-4
+        py-10
+    "
+>
+
+    <div
+        class="
+            w-full
+            max-w-lg
+        "
+    >
+
+
+        <!-- LOGO -->
+
+        <div class="text-center mb-7">
+
+            <img
+                src="assets/logo.png"
+                alt="IOIS Logo"
+                class="logo"
+            >
+
+            <div
+                class="
+                    mt-5
+                    inline-flex
+                    px-3
+                    py-1.5
+                    rounded-full
+                    bg-green-500/10
+                    border
+                    border-green-500/20
+                    text-green-400
+                    text-[10px]
+                    font-bold
+                "
+            >
+
+                <i
+                    class="
+                        fa-solid
+                        fa-shield-halved
+                        mr-1
+                    "
+                ></i>
+
+                SECURE REGISTRATION
+
+            </div>
+
+
+            <h1
+                class="
+                    mt-4
+                    text-3xl
+                    font-black
+                "
+            >
+                Create Your Account
+            </h1>
+
+
+            <p
+                class="
+                    mt-2
+                    text-xs
+                    text-gray-400
+                "
+            >
+                IOIS Member बनने के लिए registration करें।
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             REGISTRATION CARD
+        ================================================== -->
+
+        <div
+            class="
+                glass
+                rounded-3xl
+                p-6
+                sm:p-8
+            "
+        >
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="message"
+                class="hidden mb-5 message"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+
+
+            <!-- FORM -->
+
+            <form
+                id="registration-form"
+                class="space-y-5"
+                novalidate
+            >
+
+
+                <!-- FULL NAME -->
+
+                <div>
+
+                    <label
+                        for="full-name"
+                        class="
+                            block
+                            text-xs
+                            text-amber-400
+                            font-bold
+                            mb-2
+                        "
+                    >
+
+                        <i
+                            class="
+                                fa-solid
+                                fa-user
+                                mr-1
+                            "
+                        ></i>
+
+                        Full Name *
+
+                    </label>
+
+
+                    <input
+                        id="full-name"
+                        name="full_name"
+                        type="text"
+                        autocomplete="name"
+                        required
+                        minlength="2"
+                        maxlength="100"
+                        placeholder="Enter your full name"
+                        class="
+                            input-box
+                            rounded-xl
+                            py-3.5
+                            px-4
+                            text-sm
+                        "
+                    >
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div>
+
+                    <label
+                        for="email"
+                        class="
+                            block
+                            text-xs
+                            text-amber-400
+                            font-bold
+                            mb-2
+                        "
+                    >
+
+                        <i
+                            class="
+                                fa-solid
+                                fa-envelope
+                                mr-1
+                            "
+                        ></i>
+
+                        Email Address *
+
+                    </label>
+
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        required
+                        maxlength="255"
+                        placeholder="Enter your email"
+                        class="
+                            input-box
+                            rounded-xl
+                            py-3.5
+                            px-4
+                            text-sm
+                        "
+                    >
+
+                </div>
+
+
+
+                <!-- MOBILE -->
+
+                <div>
+
+                    <label
+                        for="mobile"
+                        class="
+                            block
+                            text-xs
+                            text-amber-400
+                            font-bold
+                            mb-2
+                        "
+                    >
+
+                        <i
+                            class="
+                                fa-solid
+                                fa-phone
+                                mr-1
+                            "
+                        ></i>
+
+                        Mobile Number *
+
+                    </label>
+
+
+                    <input
+                        id="mobile"
+                        name="mobile"
+                        type="tel"
+                        autocomplete="tel"
+                        inputmode="numeric"
+                        required
+                        maxlength="10"
+                        minlength="10"
+                        placeholder="10 digit mobile number"
+                        class="
+                            input-box
+                            rounded-xl
+                            py-3.5
+                            px-4
+                            text-sm
+                        "
+                    >
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div>
+
+                    <label
+                        for="password"
+                        class="
+                            block
+                            text-xs
+                            text-amber-400
+                            font-bold
+                            mb-2
+                        "
+                    >
+
+                        <i
+                            class="
+                                fa-solid
+                                fa-lock
+                                mr-1
+                            "
+                        ></i>
+
+                        Password *
+
+                    </label>
+
+
+                    <div class="relative">
+
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            autocomplete="new-password"
+                            required
+                            minlength="8"
+                            maxlength="72"
+                            placeholder="Create a strong password"
+                            class="
+                                input-box
+                                rounded-xl
+                                py-3.5
+                                px-4
+                                pr-12
+                                text-sm
+                            "
+                        >
+
+
+                        <button
+                            type="button"
+                            id="toggle-password"
+                            class="
+                                absolute
+                                right-4
+                                top-1/2
+                                -translate-y-1/2
+                                text-gray-500
+                                hover:text-amber-400
+                            "
+                            aria-label="Show password"
+                        >
+
+                            <i
+                                id="password-icon"
+                                class="
+                                    fa-solid
+                                    fa-eye
+                                "
+                            ></i>
+
+                        </button>
+
+                    </div>
+
+
+                    <p
+                        class="
+                            mt-2
+                            text-[10px]
+                            text-gray-500
+                        "
+                    >
+                        Password कम से कम 8 characters का रखें।
+                    </p>
+
+                </div>
+
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div>
+
+                    <label
+                        for="confirm-password"
+                        class="
+                            block
+                            text-xs
+                            text-amber-400
+                            font-bold
+                            mb-2
+                        "
+                    >
+
+                        <i
+                            class="
+                                fa-solid
+                                fa-lock
+                                mr-1
+                            "
+                        ></i>
+
+                        Confirm Password *
+
+                    </label>
+
+
+                    <input
+                        id="confirm-password"
+                        name="confirm_password"
+                        type="password"
+                        autocomplete="new-password"
+                        required
+                        minlength="8"
+                        maxlength="72"
+                        placeholder="Re-enter your password"
+                        class="
+                            input-box
+                            rounded-xl
+                            py-3.5
+                            px-4
+                            text-sm
+                        "
+                    >
+
+                </div>
+
+
+
+                <!-- REFERRAL -->
+
+                <div>
+
+                    <label
+                        for="referral-code"
+                        class="
+                            block
+                            text-xs
+                            text-amber-400
+                            font-bold
+                            mb-2
+                        "
+                    >
+
+                        <i
+                            class="
+                                fa-solid
+                                fa-users
+                                mr-1
+                            "
+                        ></i>
+
+                        Referral Code
+                        <span class="text-gray-500">
+                            (Optional)
+                        </span>
+
+                    </label>
+
+
+                    <input
+                        id="referral-code"
+                        name="referral_code"
+                        type="text"
+                        maxlength="30"
+                        placeholder="Enter referral code"
+                        class="
+                            input-box
+                            rounded-xl
+                            py-3.5
+                            px-4
+                            text-sm
+                        "
+                    >
+
+                </div>
+
+
+
+                <!-- TERMS -->
+
+                <label
+                    class="
+                        flex
+                        items-start
+                        gap-3
+                        cursor-pointer
+                        text-[11px]
+                        text-gray-400
+                    "
+                >
+
+                    <input
+                        id="terms"
+                        type="checkbox"
+                        required
+                        class="
+                            mt-0.5
+                            w-4
+                            h-4
+                            accent-amber-400
+                            shrink-0
+                        "
+                    >
+
+                    <span>
+
+                        मैं IOIS के
+                        <a
+                            href="terms.html"
+                            class="
+                                text-amber-400
+                                hover:underline
+                            "
+                        >
+                            Terms & Conditions
+                        </a>
+                        और
+                        <a
+                            href="privacy.html"
+                            class="
+                                text-amber-400
+                                hover:underline
+                            "
+                        >
+                            Privacy Policy
+                        </a>
+                        को स्वीकार करता/करती हूँ।
+
+                    </span>
+
+                </label>
+
+
+
+                <!-- REGISTER BUTTON -->
+
+                <button
+                    id="register-btn"
+                    type="submit"
+                    class="
+                        register-btn
+                        w-full
+                        rounded-xl
+                        py-3.5
+                        font-black
+                        text-sm
+                        flex
+                        items-center
+                        justify-center
+                        gap-2
+                    "
+                >
+
+                    <span id="register-text">
+
+                        <i
+                            class="
+                                fa-solid
+                                fa-user-plus
+                                mr-1
+                            "
+                        ></i>
+
+                        Create Account
+
+                    </span>
+
+
+                    <span
+                        id="register-spinner"
+                        class="spinner hidden"
+                    ></span>
+
+                </button>
+
+            </form>
+
+
+
+            <!-- LOGIN -->
+
+            <div
+                class="
+                    text-center
+                    mt-6
+                    pt-5
+                    border-t
+                    border-white/10
+                "
+            >
+
+                <p
+                    class="
+                        text-xs
+                        text-gray-400
+                    "
+                >
+                    पहले से account है?
+                </p>
+
+
+                <a
+                    href="login.html"
+                    class="
+                        inline-block
+                        mt-2
+                        text-amber-400
+                        hover:text-teal-400
+                        text-sm
+                        font-bold
+                    "
+                >
+
+                    Login करें
+
+                    <i
+                        class="
+                            fa-solid
+                            fa-arrow-right
+                            ml-1
+                        "
+                    ></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SECURITY -->
+
+        <div
+            class="
+                glass
+                rounded-2xl
+                p-4
+                mt-5
+            "
+        >
+
+            <div
+                class="
+                    flex
+                    gap-3
+                "
+            >
+
+                <div
+                    class="
+                        w-9
+                        h-9
+                        rounded-xl
+                        bg-green-500/10
+                        flex
+                        items-center
+                        justify-center
+                        text-green-400
+                        shrink-0
+                    "
+                >
+
+                    <i
+                        class="
+                            fa-solid
+                            fa-shield-halved
+                        "
+                    ></i>
+
+                </div>
+
+
+                <div>
+
+                    <div
+                        class="
+                            text-xs
+                            font-bold
+                            text-green-400
+                        "
+                    >
+                        Secure Registration
+                    </div>
+
+
+                    <div
+                        class="
+                            text-[10px]
+                            text-gray-500
+                            mt-1
+                            leading-5
+                        "
+                    >
+                        आपका password सीधे database में
+                        plain text के रूप में store नहीं किया जाता।
+                        Authentication Supabase Auth द्वारा
+                        manage किया जाता है।
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="
+                text-center
+                mt-5
+                text-[10px]
+                text-gray-600
+            "
+        >
+
+            ©
+            <span id="year"></span>
+            IOIS Platform
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     REGISTRATION LOGIC
+====================================================== -->
+
+<script>
+
+(() => {
+
+    "use strict";
+
+
+    const $ = id =>
+        document.getElementById(id);
+
+
+    const form =
+        $("registration-form");
+
+
+    const button =
+        $("register-btn");
+
+
+    const buttonText =
+        $("register-text");
+
+
+    const spinner =
+        $("register-spinner");
+
+
+    const messageBox =
+        $("message");
+
+
+    $("year").textContent =
+        new Date().getFullYear();
+
+
+
+    /* =====================================================
+       MESSAGE
+    ====================================================== */
+
+    function showMessage(
+        text,
+        type = "info"
+    ) {
+
+        messageBox.className =
+            "message mb-5 " + type;
+
+        messageBox.textContent =
+            text;
+
+        messageBox.classList.remove(
+            "hidden"
+        );
+
+        messageBox.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+
+    }
+
+
+
+    function clearMessage() {
+
+        messageBox.className =
+            "hidden mb-5 message";
+
+        messageBox.textContent =
+            "";
+
+    }
+
+
+
+    /* =====================================================
+       PASSWORD TOGGLE
+    ====================================================== */
+
+    $("toggle-password")
+        .addEventListener(
+            "click",
+            () => {
+
+                const input =
+                    $("password");
+
+
+                const icon =
+                    $("password-icon");
+
+
+                const visible =
+                    input.type ===
+                    "text";
+
+
+                input.type =
+                    visible
+                        ? "password"
+                        : "text";
+
+
+                icon.className =
+                    visible
+                        ? "fa-solid fa-eye"
+                        : "fa-solid fa-eye-slash";
+
+            }
+        );
+
+
+
+    /* =====================================================
+       MOBILE VALIDATION
+    ====================================================== */
+
+    $("mobile")
+        .addEventListener(
+            "input",
+            event => {
+
+                event.target.value =
+                    event.target.value
+                        .replace(
+                            /\D/g,
+                            ""
+                        )
+                        .slice(
+                            0,
+                            10
+                        );
+
+            }
+        );
+
+
+
+    /* =====================================================
+       REGISTRATION
+    ====================================================== */
+
+    form.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+            clearMessage();
+
+
+            const fullName =
+                $("full-name")
+                    .value
+                    .trim();
+
+
+            const email =
+                $("email")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const mobile =
+                $("mobile")
+                    .value
+                    .trim();
+
+
+            const password =
+                $("password")
+                    .value;
+
+
+            const confirmPassword =
+                $("confirm-password")
+                    .value;
+
+
+            const referralCode =
+                $("referral-code")
+                    .value
+                    .trim()
+                    .toUpperCase();
+
+
+            const terms =
+                $("terms")
+                    .checked;
+
+
+
+            /* ---------------------------------------------
+               VALIDATION
+            ---------------------------------------------- */
+
+            if (
+                fullName.length <
+                2
+            ) {
+
+                showMessage(
+                    "कृपया अपना सही Full Name डालें।",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                    .test(email)
+            ) {
+
+                showMessage(
+                    "कृपया valid Email Address डालें।",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                !/^[6-9]\d{9}$/
+                    .test(mobile)
+            ) {
+
+                showMessage(
+                    "कृपया valid 10-digit Indian mobile number डालें।",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                password.length <
+                8
+            ) {
+
+                showMessage(
+                    "Password कम से कम 8 characters का होना चाहिए।",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                password !==
+                confirmPassword
+            ) {
+
+                showMessage(
+                    "Password और Confirm Password match नहीं कर रहे।",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (!terms) {
+
+                showMessage(
+                    "Registration जारी रखने के लिए Terms & Conditions स्वीकार करें।",
+                    "error"
+                );
+
+                return;
+            }
+
+
+
+            /* ---------------------------------------------
+               CLIENT
+            ---------------------------------------------- */
+
+            const client =
+                window.ioisSupabase;
+
+
+            if (!client) {
+
+                showMessage(
+                    "Supabase connection उपलब्ध नहीं है। config.js और Supabase setup check करें।",
+                    "error"
+                );
+
+                return;
+            }
+
+
+
+            /* ---------------------------------------------
+               LOADING
+            ---------------------------------------------- */
+
+            button.disabled =
+                true;
+
+            buttonText.classList.add(
+                "hidden"
+            );
+
+            spinner.classList.remove(
+                "hidden"
+            );
+
+
+
+            try {
+
+
+                /* -----------------------------------------
+                   CREATE AUTH USER
+                ------------------------------------------ */
+
+                const {
+                    data,
+                    error
+                } =
+                    await client.auth.signUp({
+
+                        email:
+                            email,
+
+                        password:
+                            password,
+
+                        options: {
+
+                            data: {
+
+                                full_name:
+                                    fullName,
+
+                                mobile:
+                                    mobile,
+
+                                referral_code:
+                                    referralCode ||
+                                    null
+
+                            }
+
+                        }
+
+                    });
+
+
+                if (error) {
+
+                    throw error;
+                }
+
+
+                const user =
+                    data?.user;
+
+
+                if (!user) {
+
+                    throw new Error(
+                        "Account create नहीं हो सका।"
+                    );
+
+                }
+
+
+
+                /* -----------------------------------------
+                   PROFILE
+
+                   IMPORTANT:
+                   RLS policy must allow the authenticated
+                   user to insert/update own profile.
+                ------------------------------------------ */
+
+                const profilePayload = {
+
+                    id:
+                        user.id,
+
+                    user_id:
+                        user.id,
+
+                    full_name:
+                        fullName,
+
+                    email:
+                        email,
+
+                    mobile:
+                        mobile,
+
+                    referral_code:
+                        referralCode ||
+                        null
+
+                };
+
+
+                const profileResult =
+                    await client
+                        .from("profiles")
+                        .upsert(
+                            profilePayload,
+                            {
+                                onConflict:
+                                    "id"
+                            }
+                        );
+
+
+                if (
+                    profileResult.error
+                ) {
+
+                    console.error(
+                        "Profile error:",
+                        profileResult.error
+                    );
+
+                    /*
+                       Auth account already exists.
+                       Do not tell user registration
+                       completely failed.
+                    */
+
+                    showMessage(
+                        "Account create हो गया है, लेकिन profile setup pending है। कृपया Login करके दोबारा check करें।",
+                        "info"
+                    );
+
+                    return;
+                }
+
+
+
+                /* -----------------------------------------
+                   SUCCESS
+                ------------------------------------------ */
+
+                if (
+                    data.session
+                ) {
+
+                    showMessage(
+                        "Registration successful! आपका account तैयार है। Dashboard पर जा रहे हैं...",
+                        "success"
+                    );
+
+
+                    setTimeout(
+                        () => {
+
+                            window.location.href =
+                                "dashboard.html";
+
+                        },
+                        1200
+                    );
+
+                } else {
+
+                    showMessage(
+                        "Registration successful! आपके Email पर verification link भेजा गया है। Email verify करके Login करें।",
+                        "success"
+                    );
+
+                }
+
+
+
+                /* -----------------------------------------
+                   TELEGRAM NOTIFICATION
+
+                   Token frontend में नहीं है.
+                   Edge Function handles bot.
+                ------------------------------------------ */
+
+                try {
+
+                    const telegramURL =
+                        window.IOIS_CONFIG
+                            ?.TELEGRAM_FUNCTION_URL;
+
+
+                    if (telegramURL) {
+
+                        await fetch(
+                            telegramURL,
+                            {
+
+                                method:
+                                    "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        event:
+                                            "new_registration",
+
+                                        user_id:
+                                            user.id,
+
+                                        full_name:
+                                            fullName,
+
+                                        email:
+                                            email,
+
+                                        mobile:
+                                            mobile,
+
+                                        referral_code:
+                                            referralCode ||
+                                            null
+
+                                    })
+
+                            }
+                        );
+
+                    }
+
+                } catch (
+                    telegramError
+                ) {
+
+                    /*
+                       Telegram notification failure
+                       should not break registration.
+                    */
+
+                    console.warn(
+                        "Telegram notification failed:",
+                        telegramError
+                    );
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Registration error:",
+                    error
+                );
+
+
+                let text =
+                    error?.message ||
+                    "Registration failed.";
+
+
+                if (
+                    text.toLowerCase()
+                        .includes(
+                            "user already registered"
+                        )
+                ) {
+
+                    text =
+                        "इस Email से account पहले से registered है। Login करें या Forgot Password इस्तेमाल करें।";
+
+                }
+
+
+                showMessage(
+                    text,
+                    "error"
+                );
+
+
+            } finally {
+
+                button.disabled =
+                    false;
+
+                buttonText.classList.remove(
+                    "hidden"
+                );
+
+                spinner.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+    );
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
