@@ -1,17 +1,20 @@
-# IOIS PLATFORM — Final Frontend
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+</div>
 
-Upload all files/folders in this directory to the GitHub repository root.
+# Run and deploy your AI Studio app
 
-## Pages
-- index.html
-- membership.html
-- news.html
-- jobs.html
-- chat.html
-- panchang.html
-- style.css
-- script.js
-- assets/logo.png (optional; add your actual IOIS logo)
+This contains everything you need to run your app locally.
 
-## Notes
-This is a static frontend. Weather uses Open-Meteo client-side. Registration demo stores leads in browser localStorage. Do not expose private Telegram/Supabase service keys in frontend code. Use a secure backend/serverless function for private credentials.
+View your app in AI Studio: https://ai.studio/apps/e876ace6-d20e-468d-b9e8-6300349cc3a7
+
+## Run Locally
+
+**Prerequisites:**  Node.js
+
+
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`
